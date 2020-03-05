@@ -3,63 +3,201 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.9.3/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.9.3/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.9.3/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.9.3/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.9.3/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
+    <title>Esquiva el Fuego A2</title>
+    <style>
+      body {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+      .gr {
+        position: absolute;
+        display: block;
+        font-size: 30px;
+      }
+       .fig {
+        position: absolute;
+        display: block;
+        font-size: 60px;
       }
     </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
-
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  	/*Web Components*/
+      function move(i) {
+        return i + 1 - 50 * Math.random();
+      }
+        customElements.define("lavab-web", class extends HTMLElement {
+        connectedCallback() {
+          this.classList.add("gr")
+          this.x = 0;
+          this.innerHTML = "&#x1F525;";
+          this.style.fontSize = "50px";
+        }
+        
+        movp() {
+          let y = 50 * Math.random(r) + 200;
+          let x = 12 * Math.random(y) + 20;
+          lavab.style.right = `${this.x}px`;
+          lavab.style.top = `${y}px`;
+          this.x = this.x > 1100 ? 5 : this.x + 50;
+          r += 1;
+        }  
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+     });
+
+ customElements.define("lavac-web", class extends HTMLElement {
+        connectedCallback() {
+          this.classList.add("gr")
+          this.x = 0;
+          this.innerHTML = "&#x1F525;";
+          this.style.fontSize = "50px";
+        }
+
+        movp() {
+          let y = 50 * Math.sin(r) + 200;
+          let x = 140 * Math.cos(y) + 20;
+          lavac.style.right = `${this.x}px`;
+          lavac.style.top = `${y}px`;
+          this.x = this.x > 1100 ? 5 : this.x + 50;
+          r += 1;   
+        }  
+     });
+
+     
+
+      customElements.define("auto-a", class extends HTMLElement {
+        connectedCallback() {
+          this.classList.add("fig")
+          this.innerHTML = "&#x1F3CE;";
+          this.style.fontSize = "100px";
+        }
+        
+        movp(x, y) {
+          this.style.right = `${move(x)}px`;
+          this.style.top = `${move(y)}px`;
         }
       });
+      /*Movimiento por parte de las flechas*/
+      customElements.define("auto-b", class extends HTMLElement {
+        connectedCallback() {
+          this.classList.add("fig")
+          this.innerHTML = "&#x1F3CE;";
+          this.x = 0;
+          this.y = 0;
+        }
+        arriba() {
+          this.y -= 20;
+          this.movp()
+        }
+        abajo() {
+          this.y += 20;
+          this.movp()
+        }
+        izquierda() {
+          this.x += 20;
+          this.movp()
+        }
+        derecha() {
+          this.x -= 20;
+          this.movp()
+        }
+        movp() {
+         this.lavas = Array.from(document.querySelectorAll("auto-a"));
+          this.style.right = `${this.x}px`;
+          this.style.top = `${this.y}px`;
+          var incr = 100;
+          for (const lava of this.lavas) {
+            lava.movp(this.x + incr, this.y + incr);
+            incr += 150;
+          }
+        }
+      });
+      </script>
+  </head>
+  <body>
+   
+    <img src="fondoa.jpg" height="100%" width="100%" />
+    <src="C:\Users\cesar\Desktop\Ejercicios 1erParcial\intergaz.js"></src>
+    <lavab-web id="lavab"></lavab-web>
+    <auto-a></auto-a>
+    <auto-a></auto-a>
+    <auto-b id="corre"></auto-b>
+    <lavac-web id="lavac"></lavac-web>
+
+    
+    
+    <script>
+       /*Asociaciones a Muchos y a uno*/ 
+      let X = null;
+      let Y = null;
+      document.addEventListener('start', evt => {
+        const torque = evt.touches[0];
+        X = torque.cliX;
+        Y = torque.cliY;
+      });
+      document.addEventListener('move', evt => {
+        if (X && Y) {
+          const mov = evt.touches[0];
+          var movX = mov.clieX;
+          var movY = mov.cliY;
+          var diX = movX - X;
+          var diY = movY - Y;
+      if (Math.abs(diX) + Math.abs(diY) > 150) {
+            if (Math.abs(diX) > Math.abs(diY)) {
+              if (diX > 1200) {
+                corre.derecha();
+              } else {
+                corre.izquierda();
+              }
+            } else if (diY > 120) {
+              corre.abajo();
+            } else {
+              corre.arriba();
+            }
+            X = null;
+            Y = null;
+          }
+        }
+      });
+    	function meta(){
+       for(let a=10;a<230;a+=80){
+        let b=.8;
+        a = a+0;
+        document.body.innerHTML+=
+        `<div i style=";                                           
+         top:${a}px;
+        left:${b}px;">
+       </div>`;
+      }
+  }
+      let r=3;
+      setInterval(() => lavab.movp(), 400);
+      setInterval(() => lavac.movp(), 300);
+      setInterval(() => lavaa.movp(), 700);
+      meta();
+
+      corre.movp();
+      document.addEventListener("keydown", evt => {
+        switch (evt.key) {
+          case "ArrowLeft":
+            corre.izquierda();
+            break;
+          case "ArrowRight":
+            corre.derecha();
+            break;
+          case "ArrowUp":
+            corre.arriba();
+            break;
+          case "ArrowDown":
+            corre.abajo();
+            break;
+        }
+      });
+      
     </script>
   </body>
 </html>
